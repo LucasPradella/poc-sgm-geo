@@ -44,26 +44,12 @@ public class TokenService {
 				.parseClaimsJws(token)
 				.getBody();
 
-
-		return Arrays.stream(claims.get("authorities").toString().replace("[", "").replace("]", "").split(","))
+		return Arrays.stream(claims.get("authorities")
+				.toString()
+				.replace("[", "")
+				.replace("]", "")
+				.split(","))
 						.map(SimpleGrantedAuthority::new)
 						.collect(Collectors.toList());
-	}
-
-
-
-	public Authentication authentication(String token) {
-		Claims claims = Jwts.parser()
-				.setSigningKey(secret)
-				.parseClaimsJws(token)
-				.getBody();
-
-		final Collection<? extends GrantedAuthority> authorities =
-				Arrays.stream(claims.get("authorities").toString().split(","))
-						.map(SimpleGrantedAuthority::new)
-						.collect(Collectors.toList());
-
-		return new UsernamePasswordAuthenticationToken(null, "", authorities);
-
 	}
 }
