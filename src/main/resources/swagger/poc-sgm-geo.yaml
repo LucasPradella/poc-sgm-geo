@@ -1,0 +1,84 @@
+
+swagger: "2.0"
+info:
+  description: "Georeferenced Municipal Information"
+  version: "1.0.0"
+  title: poc-sgm-geo
+  contact:
+    email: "lucas.pradella@hotmail.com"
+host: "localhost:8090"
+basePath: "/v1"
+tags:
+  - name: "Georeferenced"
+    description: "general purpose endpoint"
+  - name: "Georeferenced for administrators"
+    description: "Endpoint for restricted use by administrators and employees"
+  - name: "Georeferenced for applications"
+    description: "Endpoints for exclusive use of other applications"
+schemes:
+  - "https"
+  - "http"
+
+
+paths:
+  /city-data/{idLocation}/info:
+    get:
+      tags:
+        - "Georeferenced"
+      summary: "Returns the main news"
+      description: "USER ROLE is required to access"
+      operationId: "searchData"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "idLocation"
+          in: "path"
+          description: "ID for IBGE"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/InfoResponse"
+        "400":
+          description: "bady request"
+        "404":
+          description: "not found"
+        "500":
+          description: "server error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
+definitions:
+  InfoResponse:
+    type: "object"
+    properties:
+      typeSubject:
+        type: string
+      title:
+        type: string
+      introduction:
+        type: string
+      publicationDate:
+        type: integer
+        description: "date in miles seconds"
+        example: "1516239022"
+      subject:
+        type: string
+      editorials:
+        type: string
+      link:
+        type: string
+
+
+  ErrorResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"

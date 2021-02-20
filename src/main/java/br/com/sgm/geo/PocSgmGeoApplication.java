@@ -2,15 +2,13 @@ package br.com.sgm.geo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication()
+@SpringBootApplication
+@EnableFeignClients(basePackages="br.com.sgm.geo.ibge.client")
 public class PocSgmGeoApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(PocSgmGeoApplication.class, args);
 	}
-
 }
+
