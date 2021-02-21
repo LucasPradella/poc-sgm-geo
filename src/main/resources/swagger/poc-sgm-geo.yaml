@@ -17,16 +17,24 @@ tags:
 schemes:
   - "https"
   - "http"
-
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 
 paths:
   /city-data/{idLocation}/info:
     get:
+      security:
+        - Bearer: []
       tags:
         - "Georeferenced"
       summary: "Returns the main news"
       description: "USER ROLE is required to access"
-      operationId: "cityData"
+      operationId: "searchData"
+      consumes:
+        - "application/json"
       parameters:
         - name: "idLocation"
           in: "path"
@@ -48,6 +56,69 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /city-data/{idLocation}/metadata:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Georeferenced for administrators"
+      summary: "Returns the main news"
+      description: "ROLE USER and ADMIN is required to access"
+      operationId: "metadata"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "idLocation"
+          in: "path"
+          description: "ID for IBGE"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/MetadataResponse"
+        "400":
+          description: "bady request"
+        "404":
+          description: "not found"
+        "500":
+          description: "server error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /geographic-coordinates/{idLocation}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Georeferenced for applications"
+      summary: "Returns the main news"
+      description: "ROLE APPLICATION and NOT USER is required to access"
+      operationId: "coordinates"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "idLocation"
+          in: "path"
+          description: "ID for IBGE"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CoordinatesResponse"
+        "400":
+          description: "bady request"
+        "404":
+          description: "not found"
+        "500":
+          description: "server error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 definitions:
   InfoResponse:
@@ -69,6 +140,42 @@ definitions:
         type: string
       link:
         type: string
+
+  MetadataResponse:
+    type: "object"
+    properties:
+      population:
+        type: string
+      nameCity:
+        type: string
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/DataResponse'
+
+  DataResponse:
+    type: "object"
+    properties:
+      description:
+        type: string
+      unit:
+        type: string
+      count:
+        type: integer
+
+
+  CoordinatesResponse:
+    type: "object"
+    properties:
+      scale:
+        type: array
+        items:
+          type: string
+
+      translate:
+        type: array
+        items:
+          type: string
 
 
   ErrorResponse:

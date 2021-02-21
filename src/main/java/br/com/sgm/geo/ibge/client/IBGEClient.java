@@ -1,5 +1,6 @@
 package br.com.sgm.geo.ibge.client;
 
+import br.com.sgm.geo.ibge.response.MeshesModel;
 import br.com.sgm.geo.ibge.response.NewsModel;
 import br.com.sgm.geo.ibge.response.PopulationModel;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -12,9 +13,10 @@ public interface IBGEClient {
     @GetMapping("v1/projecoes/populacao/{locality}")
     PopulationModel populationSearch(@PathVariable("locality") String locality);
 
-    @GetMapping("v3/malhas/municipios/{code}")
-    String municipalMeshesSearch(@PathVariable("code") String code);
+    @GetMapping("v3/malhas/municipios/{code}?formato=application/json")
+    MeshesModel municipalMeshesSearch(@PathVariable("code") String code);
 
     @GetMapping("v3/noticias/?qtd=1")
     NewsModel newsSearch();
+
 }

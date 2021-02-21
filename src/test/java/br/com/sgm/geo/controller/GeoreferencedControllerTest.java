@@ -31,7 +31,7 @@ public class GeoreferencedControllerTest {
 
     @Test
     void shouldCallGeoreferencedServiceAndNotReturnNull() {
-        ResponseEntity<InfoResponse> InfoResponse = georeferencedControllerTest.cityData(3538709L);
+        ResponseEntity<InfoResponse> InfoResponse = georeferencedControllerTest.searchData(3538709L);
 
         verify(georeferencedService).findInfo(3538709L);
         assertNotNull(InfoResponse);
