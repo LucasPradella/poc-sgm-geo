@@ -54,6 +54,37 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.threeten</groupId>
+			<artifactId>threetenbp</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.joschi.jackson</groupId>
+			<artifactId>jackson-datatype-threetenbp</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.12.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
@@ -81,6 +112,49 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-codegen-maven-plugin</artifactId>
+				<version>2.4.18</version>
+				<executions>
+					<execution>
+						<id>geo</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>src/main/resources/swagger/poc-sgm-geo.yaml</inputSpec>
+							<language>spring</language>
+							<modelPackage>br.com.sgm.geo.model</modelPackage>
+							<apiPackage>br.com.sgm.geo.api</apiPackage>
+							<generateSupportingFiles>false</generateSupportingFiles>
+							<configOptions>
+								<souceFolder>gen</souceFolder>
+								<interfaceOnly>true</interfaceOnly>
+								<dataLibrary>java8</dataLibrary>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated/swagger/gen</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

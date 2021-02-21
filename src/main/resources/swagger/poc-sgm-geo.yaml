@@ -1,4 +1,3 @@
-
 swagger: "2.0"
 info:
   description: "Georeferenced Municipal Information"
@@ -27,9 +26,7 @@ paths:
         - "Georeferenced"
       summary: "Returns the main news"
       description: "USER ROLE is required to access"
-      operationId: "searchData"
-      consumes:
-        - "application/json"
+      operationId: "cityData"
       parameters:
         - name: "idLocation"
           in: "path"
