@@ -13,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -43,6 +43,15 @@ public class GeoreferencedServiceTest {
         verify(ibgeClient).newsSearch();
         assertEquals("link", info.getLink());
 
+    }
+
+    @Test
+    void findMetadata() {
+       when(ibgeClient.agriculturalAggregates(3538709L)).thenReturn(null);
+
+       georeferencedService.findMetadata(3538709L);
+
+       verify(ibgeClient).agriculturalAggregates(3538709L);
     }
 
     private NewsModel newsModel() {

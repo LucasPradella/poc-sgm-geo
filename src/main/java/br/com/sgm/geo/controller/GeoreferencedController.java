@@ -20,7 +20,13 @@ public class GeoreferencedController implements CityDataApi {
 
     @Override // TODO: alterar role para permitir apenas usuarios não admin tenha acesso
     public ResponseEntity<MetadataResponse> metadata(Long idLocation) {
-        return null;
+        MetadataResponse data = georeferencedService.findMetadata(idLocation);
+
+        if (data == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(data);
     }
 
     @Override

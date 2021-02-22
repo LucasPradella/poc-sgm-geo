@@ -18,7 +18,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class GeoreferencedControllerTest {
 
     @InjectMocks
-    private GeoreferencedController georeferencedControllerTest;
+    private GeoreferencedController georeferencedController;
 
     @Mock
     private GeoreferencedService georeferencedService;
@@ -31,10 +31,17 @@ public class GeoreferencedControllerTest {
 
     @Test
     void shouldCallGeoreferencedServiceAndNotReturnNull() {
-        ResponseEntity<InfoResponse> InfoResponse = georeferencedControllerTest.searchData(3538709L);
+        ResponseEntity<InfoResponse> InfoResponse = georeferencedController.searchData(3538709L);
 
         verify(georeferencedService).findInfo(3538709L);
         assertNotNull(InfoResponse);
 
+    }
+
+    @Test
+    void metadata() {
+        georeferencedController.metadata(3538709L);
+
+        verify(georeferencedService).findMetadata(3538709L);
     }
 }

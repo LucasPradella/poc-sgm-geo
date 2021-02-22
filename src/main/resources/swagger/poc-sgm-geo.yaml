@@ -144,8 +144,6 @@ definitions:
   MetadataResponse:
     type: "object"
     properties:
-      population:
-        type: string
       nameCity:
         type: string
       data:
@@ -161,7 +159,7 @@ definitions:
       unit:
         type: string
       count:
-        type: integer
+        type: string
 
 
   CoordinatesResponse:
