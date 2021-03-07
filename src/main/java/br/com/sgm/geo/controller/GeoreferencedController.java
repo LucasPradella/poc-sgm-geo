@@ -31,7 +31,7 @@ public class GeoreferencedController implements CityDataApi {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') ")
     public ResponseEntity<InfoResponse> searchData(Long idLocation) {
         InfoResponse info = georeferencedService.findInfo(idLocation);
 
